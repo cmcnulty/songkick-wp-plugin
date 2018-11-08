@@ -59,6 +59,22 @@ class SongkickPresentableEvents {
             $this->no_calendar_style = $options['no_calendar_style'];
         }
     }
+    
+    function to_csv() {
+        $str = '';
+        
+        header('Content-Type: application/excel');
+        header('Content-Disposition: attachment; filename="gigography.csv"');
+
+        $fp = fopen('php://output', 'wb');
+        foreach($this->events as $event) {
+            // TODO figure out what's in the $event and parse it properly
+            $line = $event;
+            fputcsv($fp, $line, ',');
+        }
+        fclose($fp);        
+
+    }
 
     function to_html() {
         $profile_title = __('See all concerts', SONGKICK_TEXT_DOMAIN);
